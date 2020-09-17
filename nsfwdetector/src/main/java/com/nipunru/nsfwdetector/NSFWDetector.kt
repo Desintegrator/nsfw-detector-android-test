@@ -9,7 +9,7 @@ import com.google.firebase.ml.vision.label.FirebaseVisionOnDeviceAutoMLImageLabe
 
 const val TAG = "NSFWDetector"
 
-object NSFWDetector {
+public object NSFWDetector {
     private const val LABEL_SFW = "nude"
     private const val LABEL_NSFW = "nonnude"
     private const val CONFIDENCE_THRESHOLD: Float = 0.7F
