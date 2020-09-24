@@ -31,7 +31,7 @@ public object NSFWDetector {
     fun isNSFW(
         bitmap: Bitmap,
         confidenceThreshold: Float = CONFIDENCE_THRESHOLD,
-        callback: (Boolean, Float, Bitmap) -> Unit
+        callback: (String, Float, Bitmap) -> Unit
     ) {
         var threshold = confidenceThreshold
 
@@ -42,32 +42,17 @@ public object NSFWDetector {
         interpreter.processImage(image).addOnSuccessListener { labels ->
             try {
                 val label = labels[0]
-                when (label.text) {
-                    LABEL_SFW -> {
-                        if (label.confidence > threshold) {
-                            callback(true, label.confidence, bitmap)
-                        } else {
-                            callback(false, label.confidence, bitmap)
-                        }
-                    }
-                    LABEL_NSFW -> {
-                        if (label.confidence < (1 - threshold)) {
-                            callback(true, label.confidence, bitmap)
-                        } else {
-                            callback(false, label.confidence, bitmap)
-                        }
-                    }
-                    else -> {
-                        callback(false, 0.0F, bitmap)
-                    }
+                for (i in labels) {
+                    Log.d(TAG, i.text)
                 }
+                callback(label.text, 0.0F, bitmap)
             } catch (e: Exception) {
                 Log.e(TAG, e.localizedMessage ?: "NSFW Scan Error")
-                callback(false, 0.0F, bitmap)
+                callback("", 0.0F, bitmap)
             }
         }.addOnFailureListener { e ->
             Log.e(TAG, e.localizedMessage ?: "NSFW Scan Error")
-            callback(false, 0.0F, bitmap)
+            callback("", 0.0F, bitmap)
         }
     }
 }
