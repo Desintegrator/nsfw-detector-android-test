@@ -22,12 +22,6 @@ public object NSFWDetector {
         FirebaseVisionOnDeviceAutoMLImageLabelerOptions.Builder(localModel).build()
     private val interpreter = FirebaseVision.getInstance().getOnDeviceAutoMLImageLabeler(options)
 
-    /**
-     * This function return weather the bitmap is NSFW or not
-     * @param bitmap: Bitmap Image
-     * @param confidenceThreshold: Float 0 to 1 (Default is 0.7)
-     * @return callback with isNSFW(String), confidence(Float), and image(Bitmap)
-     */
     fun isNSFW(
         bitmap: Bitmap,
         confidenceThreshold: Float = CONFIDENCE_THRESHOLD,
