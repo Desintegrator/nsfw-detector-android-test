@@ -42,12 +42,29 @@ public object NSFWDetector {
         interpreter.processImage(image).addOnSuccessListener { labels ->
             try {
                 val label = labels[0]
-                for (i in labels) {
+                // 1
+
+                val listIterator = labels.listIterator()
+                // 2
+
+                while (listIterator.hasNext()) {
+                    // 3
+
+                    val i = listIterator.next()
+                    // 4
+
                     Log.d(TAG, i.text)
                 }
+                
                 callback(label.text, 0.0F, bitmap)
+                // 5
+
             } catch (e: Exception) {
+                // 6
+
                 Log.e(TAG, e.localizedMessage ?: "NSFW Scan Error")
+                // 7
+                
                 callback("", 0.0F, bitmap)
             }
         }.addOnFailureListener { e ->
